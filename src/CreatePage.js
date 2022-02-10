@@ -29,8 +29,8 @@ export default function CreatePage() {
       genre: genre,
       designer: designer,
       description: description,
-      minPlayers: minPlayers,
-      maxPlayers: maxPlayers
+      min_players: minPlayers,
+      max_players: maxPlayers
     });
 
     // use history.push to send the user to the list page
