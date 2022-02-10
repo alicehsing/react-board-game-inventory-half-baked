@@ -36,7 +36,7 @@ export default function CreatePage() {
     // use history.push to send the user to the list page
     history.push('/board-games');
   }
-  console.log(createGame);
+
   return (
     <div className='create'>
       {/* on submit, call your handleSubmit function */}
