@@ -8,7 +8,6 @@ export function getUser() {
 // signs an new user in and puts an auth token in local storage in the browser
 export async function signUp(email, password){
   const response = await client.auth.signUp({ email, password });
-  
   return response.user;
 }
 
@@ -43,8 +42,6 @@ export async function getGames() {
 
   return checkError(response);    
 }
-
-
 
 export async function getGameById(id) {
   const response = await client
