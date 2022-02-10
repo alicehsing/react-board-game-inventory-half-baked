@@ -43,8 +43,6 @@ export async function getGames() {
   return checkError(response);    
 }
 
-
-
 export async function getGameById(id) {
   const response = await client
     .from('board_games')
