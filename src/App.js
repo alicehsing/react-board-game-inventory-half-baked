@@ -17,12 +17,15 @@ import { logout } from './services/fetch-utils';
 
 export default function App() {
   // You'll need to track the user in state
+  // const [user, setUser] = useState(null);
   const [user, setUser] = useState(localStorage.getItem('supabase.auth.token'));
+    
   // add a useEffect to get the user and inject the user object into state on load
   useEffect(() => {
     async function fetchUser() {
-      const user = getUser();
-      if (user) setUser(user);
+      // const user = localStorage.getItem('supabase.auth.token');  
+      const user = await getUser();
+      setUser(user);
     }
     fetchUser();
   }, []);
@@ -41,7 +44,7 @@ export default function App() {
           {/* if there is a user in state, render out a link to the board games list, the create page, and add a button to let the user logout */}
           {
             user && 
-            <><NavLink to="/board-games">Board Game List</NavLink><NavLink to="/create">Create</NavLink><button onClick={handleLogout()}>Logout</button></>
+            <><NavLink to="/board-games">Board Game List</NavLink><NavLink to="/create">Create</NavLink><button onClick={handleLogout}>Logout</button></>
           }
         </header>
         <main>
@@ -50,18 +53,33 @@ export default function App() {
               {/* if there is a user, redirect to the board games list. Otherwise, render the auth page. Note that the AuthPage will need a function called setUser that can set the user state in App.js */}
               {
                 user
-                  ? <Redirect to="board-games" />
+                  ? <Redirect to="/board-games" />
                   : <AuthPage setUser={setUser} />
-              }
+              } 
             </Route>
             <Route exact path="/board-games">
               {/* if there is a user, render the board games list. Otherwise, redirect to the home route/auth page */}
+              {
+                user
+                  ? <ListPage />
+                  : <Redirect to="/"/>
+              }
             </Route>
             <Route exact path="/board-games/:id">
               {/* if there is a user, render the detail page. Otherwise, redirect to the home route/auth page */}
+              {
+                user
+                  ? <DetailPage />
+                  : <Redirect to="/" />
+              }
             </Route>
             <Route exact path="/create">
               {/* if there is a user, render the create page. Otherwise, redirect to the home route/auth page */}
+              {
+                user
+                  ? <CreatePage />
+                  : <Redirect to="/" />
+              }
             </Route>
           </Switch>
         </main>
